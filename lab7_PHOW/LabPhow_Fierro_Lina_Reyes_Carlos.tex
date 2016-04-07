@@ -1,0 +1,336 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{upgreek} % para poner letras griegas sin cursiva
+\usepackage{cancel} % para tachar
+\usepackage{mathdots} % para el comando \iddots
+\usepackage{mathrsfs} % para formato de letra
+\usepackage{stackrel} % para el comando \stackbin
+
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[breaklinks=true,bookmarks=false]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+%\ifcvprfinal\pagestyle{empty}\fi
+\setcounter{page}{1}
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{PHOW Classification}
+
+\author{Carlos Andres Reyes Rivera\\
+Universidad de los Andes\\
+{\tt\small ca.reyes1787@uniandes.edu.co}
+% For a paper whose authors are all at the same institution,
+% omit the following lines up until the closing ``}''.
+% Additional authors and addresses can be added with ``\and'',
+% just like the second author.
+% To save space, use either the email address or home page, not both
+\and
+Lina Maria Fierro Zambrano\\
+Universidad de los Andes\\
+{\tt\small lm.fierro1340@uniandes.edu.co}
+}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+
+The present lab is about the use of VLFeat in the classification of the Image-Net database. This database is conformed by 995 categories organized according to the WordNet hierarchy. The principal objective of this lab is achieve the best accuracy through the modification of the phow\_caltech101 script parameters 
+
+
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+
+\section{Database}
+
+During this lab we used two database, the caltech101 and the  Image-Net. The first is the original database of the phow\_caltech101 script and we used to understand and prove the phow algorithm. The second is the databased on which we want to work and we used to modified the script and test the classification.
+
+\subsection{caltech101}
+
+This database is conformed by 101 categories collected in September 2003 by Fei-Fei Li, Marco Andreetto, and Marc'aurelio Ranzato. The most of the categories have about 50 images and each image is roughly 300 x 200 pixels. The other categories have about 40 to 800 images and the same size. The most of the images are focused on the object and they have the same scale \cite{1}.
+
+\subsection{Image-Net}
+
+This database is conformed by 995 categories organized according to the WordNet hierarchy (noun). On each node the database has an average of over five hundred images per node. At the end of each node the database has about 100 images per categories (synsets).   All the images are quality-controlled and human-annotated. ImageNet compiles an accurate list of web images for each synse and all have a large-scale they aren't focused on the object \cite{2}.
+
+\section{Classifiers}
+
+\subsection{Pyramid histograms of visual words}
+Pyramid histograms of visual words (PHOW) is an important method to classify image, it is a variant of SIFT that classify based into gradient orientations. In Caltech 101 database the images were not divided into train and test but ImageNet was divided. To classify images we used "phow\_caltech101" script of "vl\_feat" library so we need modify the script to take into account the train images in train stage and test images in the corresponding step so we have two different variable that contained the train images and test images but the classes of two subset data was the same. 
+
+
+\section{Results}
+In order to find the best "phow\_caltech101" script parameters  in the Image-Net database we change some parameters which we consider necessaries. Accord with our experience the number of categories, the number of training images, and the spatial partitioning could be significant for the result. In this way, first we change the parameters in the original database and observed the behaviour of the algorithm.  Then we make the same changes in the Image-Net data base because this data was divided in train and test, so it was necessary modify the script to do train stage with train images and test stage with test images.  
+
+\subsection{ Caltech 101 database}
+
+Initially we decide to change the number of categories. This parameter was important because this is the most significant difference between both databases. As we want to see a significant difference we chose the 5, 15, 50, 101 number of categories and obtain the follow results.
+
+\begin{table}[H]
+\centering
+\caption{Results Caltech 101 accord categories number.}
+\label{tabla:final}
+\begin{tabular}{|c|c| c| c| c|}
+\hline
+\multicolumn{5}{|c|}{\textbf{Caltech 101}} \\
+\hline 
+\cline{1-5}
+\textbf {Num Cat} & \textbf { Nun Im}&\textbf { Sp Part} & \textbf {Accuracy} & \textbf { Time [S]}\\
+\cline{1-5}
+5 & 15 & [2,4] & 97.33\% & 72.84 \\
+\cline{1-5}
+15 & 15 & [2,4] & 83.11\% & 143.13 \\
+\cline{1-5}
+50 & 15 & [2,4] & 70.93\% & 405.87 \\
+\cline{1-5}
+101 & 15 & [2,4] & 68.10\% & 841.95 \\
+\hline
+\end{tabular}
+
+\end{table}
+
+Accord with Caltech university \cite{1} the most popular number of training images are 1, 3, 5, 10, 15, 20 and 30. In order to got the best results we decided to use this amount of image mix with the best result of the last parameter. The follow are the results obtained with this configuration.
+
+
+\begin{table}[H]
+\centering
+\caption{Results Caltech 101 accord the image trainning number.}
+\label{tabla:final}
+\begin{tabular}{|c|c| c| c| c|}
+\hline
+\multicolumn{5}{|c|}{\textbf{Caltech 101}} \\
+\hline 
+\cline{1-5}
+\textbf {Num Cat} & \textbf { Nun Im}&\textbf { Sp Part} & \textbf {Accuracy} & \textbf { Time [S]}\\
+\cline{1-5}
+5 & 1 & [2,4] & 22.67\% & 49.2 \\
+\cline{1-5}
+5 & 3 & [2,4] & 76\% & 55.16 \\
+\cline{1-5}
+5 & 5 & [2,4] & 86.77\% & 60.77 \\
+\cline{1-5}
+5 & 10 & [2,4] & 92\% & 67.98 \\
+\cline{1-5}
+5 & 15 & [2,4] & 97.33\% & 72.845833 \\
+\cline{1-5}
+5 & 20 & [2,4] & 92.00\% & 87.20 \\
+\cline{1-5}
+5 & 30 & [2,4] & 96.00\% & 99.229688 \\
+\hline
+\end{tabular}
+\end{table}
+
+
+Finally we proved the spatial partitioning. In this case we decided to use the tiny version of the "phow\_caltech101" script and change the "phow\_caltech101" scrip variable. In this case we chose 2,8,10,20 for the value of this parameter. Additionally we chose the number of categories and the number of training which have the best results. The following is the results obtained with this configuration
+
+\begin{table}[H]
+\centering
+\caption{Results Caltech 101 accord the spatial partitioning.}
+\label{my-label}
+\begin{tabular}{|c|c| c| c| c|}
+\hline
+\multicolumn{5}{|c|}{\textbf{Caltech 101}} \\
+\hline 
+\cline{1-5}
+\textbf {Num Cat} & \textbf { Nun Im}&\textbf { Sp Part} & \textbf {Accuracy} & \textbf { Time [S]}\\
+\cline{1-5}
+5 & 15 & 2 & 90.67\% & 73.85\\
+\cline{1-5}
+5 & 15 & 8 & 94.67\% & 73.87  \\
+\cline{1-5}
+5 & 15 & 10 & 96\% & 74.60  \\
+\cline{1-5}
+5 & 15 & 20 & 94.67\% & 94.67 \\
+\hline
+\end{tabular}
+\end{table}
+
+It is evident that the number of experiments, the spatial partitioning and the number of categories have a significant change in the results. In the follow images we can see the improves in the accuracy with the changes of the parameters. 
+
+\begin{figure}[H]
+
+  \subfloat[Original Parameters]{%
+  \begin{minipage}{\linewidth}
+  \centering
+  \includegraphics[width=9cm,height=4.3cm]{images/Caltech101/PHWO-102-15-15}%
+  \end{minipage}%
+  }\par
+  \subfloat[Changes in number of categories]{%
+  \begin{minipage}{\linewidth}
+  \centering
+  \includegraphics[width=9cm,height=4.3cm]{images/Caltech101/PHWO-5-5-15}%
+  \end{minipage}%
+  }\par
+  \subfloat[Changes in number of training images]{%
+  \begin{minipage}{\linewidth}
+  \centering
+  \includegraphics[width=9cm,height=4.3cm]{images/Caltech101/PHWO-5-15-15-8}%
+  \end{minipage}%
+  }\par
+  \subfloat[Changes in spatial partitioning]{%
+  \begin{minipage}{\linewidth}
+  \centering
+  \includegraphics[width=9cm,height=4.3cm]{images/Caltech101/PHWO-5-15-15}%
+  \end{minipage}%
+  }
+  \caption{Confusion Matrix}
+\end{figure}
+
+This changes can give us an idea to the possible results in the Image-Net database. We can see the number of categories has a negative change in the results, ergo when we have more categories the result turn worst. In the other hand the number of training images have a positive change in the results. In other words, if we have a few categories and many images we should to obtain a better result. Finally, with the space partition change we have both effects. If we have a middle number of this, we can obtain the best result.
+
+\subsection{ Image-Net database}
+
+We did different experiments with this database as in Caltech 101 database changing some parameters to compare both performance and problems. Initially was changed the number of categories. We started with the original script that have 15 train images, 15 test images and 5 categories or synsets obtaining an accuracy of 55.67\%. This result can be observed in figure 1. 
+
+\begin{figure}[H]  \includegraphics[width=8cm, height=4cm]{images/ImageNet/15_15_5}\caption{Confusion Matrix 15 train image, 15 test image, 5 categories}\label{Comp}\end{figure}
+The number of categories change from 5 to 995 to compare accuracy and processing time. The results of these variations are show in table 4. 
+
+\begin{table}[H]
+\centering
+\caption{Results ImageNet with variations in number of categories}
+\label{my-label}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\multicolumn{4}{|c|}{\textbf{Image Net Database}} \\ \hline
+\textbf{# Cat} & \multicolumn{1}{c|}{\textbf{Accuracy}} & \multicolumn{1}{c|}{\textbf{TrainTime {[}sec{]}}} & \multicolumn{1}{c|}{\textbf{TestTime {[}sec{]}}} \\ \hline
+\textbf{5} & 54,67\% & 34,39 & 0,002 \\ \hline
+\textbf{15} & 32\% & 98,54 & 0,01 \\ \hline
+\textbf{50} & 14,27\% & 288,43 & 0,04 \\ \hline
+\textbf{101} & 7,99\% & 505,98 & 0,26 \\ \hline
+\textbf{995} & 3,58\% & 6105,54 & 9,48 \\ \hline
+
+\end{tabular}
+\end{table}
+
+It is evident that the number of the categories affect the accuracy, as greater the number of categories less is the accuracy. In figure 2 can be observed the performance of algorithm with 101 categories that belongs to the ImageNet database. In this case the accuracy was 3,58\%. Additionally the processing time increased as the categories were increased. 
+
+\begin{figure}[H]  \includegraphics[width=9cm, height=4cm]{images/ImageNet/15_15_100}\caption{Confusion Matrix 15 train image, 15 test image, 101 categories}\label{Comp}\end{figure}
+
+Given the above results the best accuracy is obtained with 5 categories, so we continued with variations in the number of train images from 1 image to all images available per category (100). The results of these experiments are showed in table 4. 
+
+\begin{table}[H]
+\centering
+\caption{Results with variations in number of train image. 5 Categories, 15 test image}
+\label{my-label}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\multicolumn{4}{|c|}{\textbf{ImageNet database}} \\ \hline
+\multicolumn{1}{|l|}{\textbf{NumTrain}} & \multicolumn{1}{l|}{\textbf{Accuracy}} & \multicolumn{1}{l|}{\textbf{TrainTime{[}sec{]}}} & \multicolumn{1}{l|}{\textbf{TestTime{[}sec{]}}} \\ \hline
+\textbf{1} & 40\% & 12,36 & 0,0014 \\ \hline
+\textbf{3} & 40\% & 19,15 & 0,0019 \\ \hline
+\textbf{5} & 49,33\% & 25,6 & 0,002 \\ \hline
+\textbf{10} & 53,33\% & 36,97 & 0,0018 \\ \hline
+\textbf{20} & 61,33\% & 37,82 & 0,0022 \\ \hline
+\textbf{30} & 58,67\% & 47,54 & 0,004 \\ \hline
+\textbf{60} & 72\% & 64,53 & 0,003 \\ \hline
+\textbf{70} & 70,67\% & 71,34 & 0,004 \\ \hline
+\textbf{80} & 72\% & 77,6 & 0,007 \\ \hline
+\textbf{90} & 58,67\% & 75,44 & 0,005 \\ \hline
+\textbf{100} & 61,33\% & 93,66 & 0,006 \\ \hline
+\end{tabular}
+\end{table}
+
+
+Unlike the increased number of categories, in the case of the variation in number or train image, we can observed that the accuracy is better where the number of images in larger but there is a point when the performance again starts to decrease. The best number of train images is 60 because the accuracy is 72\%. Nevertheless with 80 images the performance is the same but the computer resource are greater, so for this reason the best is 60 to this parameter. Some examples about these results are presented below: 
+
+
+
+\begin{figure}[H]  \includegraphics[width=9cm, height=4cm]{images/ImageNet/15_1_5}\caption{Confusion Matrix 1 train image, 15 test image, 5 categories}\label{Comp}\end{figure}
+
+\begin{figure}[H]  \includegraphics[width=9cm, height=4cm]{images/ImageNet/15_60_5}\caption{Confusion Matrix 60 train image, 15 test image, 5 categories}\label{Comp}\end{figure}
+
+\begin{figure}[H]  \includegraphics[width=9cm, height=4cm]{images/ImageNet/15_100_5}\caption{Confusion Matrix 100 train image, 15 test image, 5 categories}\label{Comp}\end{figure}
+
+In figure 4,5 and 6 we can observe different results examples when we changes the number of train images. If we have few images the model does not classify properly but if we have more images the model is better because it have more possibilities to learn each categories. 
+
+
+Finally we change spatial paritioning in the range from 2 (original of script) to 100. The reason for this is we want see the effect that this parameter have in the algorithm performance. These changes made with the best parameters obtaining in previous experiments. The table 6 show these results. 
+
+
+\begin{table}[H]
+\centering
+\caption{Results with spatial paritioning changes. Train images: 15, test images:15, categories:5 }
+\label{my-label}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\multicolumn{4}{|c|}{\textbf{ImageNet database}} \\ \hline
+\multicolumn{1}{|l|}{\textbf{SpatialX}} & \multicolumn{1}{l|}{\textbf{Accuracy}} & \multicolumn{1}{l|}{\textbf{TrainTime{[}sec{]}}} & \multicolumn{1}{l|}{\textbf{TestTime{[}sec{]}}} \\ \hline
+\textbf{2} & 72\% & 64,53 & 0,003 \\ \hline
+\textbf{8} & 62,27\% & 69,12 & 0,0015 \\ \hline
+\textbf{10} & 68\% & 67,26 & 0,0019 \\ \hline
+\textbf{20} & 56\% & 71,71 & 0,044 \\ \hline
+\textbf{50} & 54,67\% & 84,3 & 0,12 \\ \hline
+\textbf{100} & 54,67\% & 84,37 & 0,3 \\ \hline
+\end{tabular}
+\end{table}
+
+It is evident that changes in spatial partitioning affect the performance of algorithm and the processing time; when this parameter is larger the accuracy decrease but the time is greater. So with these results we can say that the best spatial partitioning is 2 because the accuracy to this number is larger (72\%). The figures 7 and 8 show some examples of results when changed spatial partitioning and the performance. We can observe that this parameter can affect in 20\% the performance, so is very important at the moment of parameters choice. 
+
+\begin{figure}[H]  \includegraphics[width=9cm, height=4cm]{images/ImageNet/SpatialX_8}\caption{Confusion Matrix 60 train image, 15 test image, 5 categories and SpatialX=8}\label{Comp}\end{figure}
+
+\begin{figure}[H]  \includegraphics[width=9cm, height=4cm]{images/ImageNet/SpatialX_50}\caption{Confusion Matrix 60 train image, 15 test image, 5 categories and SpatialX=50}\label{Comp}\end{figure}
+
+\section{Discussion}
+
+PHOW represent one of the most important method to classify images. This method is basically the generalization of the sift but in this case we use more scale for the keypoint. In theory this method is one of the best matching method. However in this lab we realized that the method loses effectiveness as we increases the number of categories.
+
+As we said in the results the best average in the Calthec 101 database is obtained with a few categories, many training images and a middle spatial partition. However this data base is really focus in the object and is not to complicated find a descriptor which achieved a good result. Additionally as we can see in the results section the differences between the accuracies isn't really significant and depend of the categories.
+
+In the ImageNet, the number of categories also affect the algorithm performance. The reason for this is if we have more categories so the model have more possibility to wrong classify. Additionally we can observe that the results of Caltech 101 data base are better than ImageNet; this is because the last database have more variability in images. For this data base the best values of parameters are: train image=60, number of categories= 5 and spatial partitioning=2. In Caltech the best accuracy was 97.33\% instead in the other data set was 72\%. However in two cases the values of the parameters is different, so we can conclude that the values depend of the database and with this classify method is necessary change the parameters for each database. 
+In other hand the processing time was greater if the size of data was very big, so is important choose correctly the values of parameters to obtain the best results and hold computer resource that can used in other works. 
+
+\section{Limitations}
+
+The most remarkable limitation of this methods is the dependence of the accuracy with the number of categories. Additionally we can see this descriptor only take into account the grey image so the difference between color spaces is not take into account and this feature is important to classify because contain many information about the objects.  
+
+\section{Improvements}
+
+The more intuitive improvement  for this algorithm is the use of PHOW color in order to have more dimension and achieve a better results. However the introduce to more dimension couldn't be enough to get the best result. In this case we proposed to train a neural network with these descriptors.   
+
+
+
+
+% INICIO BIBLIOGRAFIA
+%----------------------------------------------------------------------------
+\phantomsection % To make hyperref link in TOC work correctly
+\addcontentsline{toc}{chapter}{\bibname} % puts entry
+\nocite{*}
+\bibliographystyle{abbrv}
+
+
+\begin{thebibliography}{1}
+
+\bibitem{1} L. Fei-Fei, R. Fergus and P. Perona. .\emph{ Learning generative visual models from few training examples: an incremental Bayesian approach tested on
+101 object categories.}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE. CVPR 2004, Workshop on Generative-Model Based Vision. 2004
+
+\bibitem{2} Olga Russakovsky and Jia Deng and Hao Su and Jonathan Krause and Sanjeev Satheesh and Sean Ma and Zhiheng Huang and Andrej Karpathy and Aditya Khosla and Michael Bernstein and Alexander C. Berg and Li Fei-Fei,
+\emph ImageNet Large Scale Visual Recognition Challenge, (2015)\hskip  1em plus 0.5em minus 0.4em\relax
+International Journal of Computer Vision (IJCV),volume 115 number 3 pages 211-252
+
+\bibitem{3} P.Arbelaez. \emph{Lecture 13: Recognition 02}.\hskip 1em plus 0.5em minus 0.4em\relax Computer Vision, Universidad de los Andes.  
+
+\end{thebibliography}
+
+\end{document}
